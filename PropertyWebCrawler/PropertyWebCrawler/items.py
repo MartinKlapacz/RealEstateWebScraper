@@ -10,5 +10,19 @@ import scrapy
 
 class PropertywebcrawlerItem(scrapy.Item):
     # define the fields for your item here like:
-    # name = scrapy.Field()
-    pass
+    total_price = scrapy.Field()
+    room_number = scrapy.Field()
+    balcony = scrapy.Field()
+    bedroom_number = scrapy.Field()
+    bathroom_number = scrapy.Field()
+    property_type = scrapy.Field()
+    garage = scrapy.Field()
+    internetspeed_maximum = scrapy.Field()
+    construction_year = scrapy.Field()
+    object_condition = scrapy.Field()
+    heater = scrapy.Field()
+    power_consumption = scrapy.Field()
+    energy_certificate = scrapy.Field()
+    living_space = scrapy.Field()
+    describtion = scrapy.Field()
+    
