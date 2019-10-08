@@ -4,6 +4,7 @@ import scrapy
 
 class PropertyspiderSpider(scrapy.Spider):
     name = 'PropertySpider'
+    errors_counter = 0
 
     def start_requests(self):
         urls = [
@@ -13,21 +14,28 @@ class PropertyspiderSpider(scrapy.Spider):
         for url in urls:
             yield scrapy.Request(url=url, callback=self.parse)
 
-
+    def parse_ad(self, response):
+        
+        pass
 
     def parse(self, response):
-        data_object_ids = set()
+        data_object_ids = []
         for i in range(20):
             try:
-                query = '//*[@id="resultListItems"]/li[%s]/div' % i
+                query = '//*[@id="resultListItems"]/li[%s]/div/article' % i
                 resp = response.xpath(query)
                 data_object_id = resp.attrib['data-obid']
-                ad_links.add(data_object_id)
-            except:
-                print('something went wrong')
+                data_object_ids.append(data_object_id)
+            except KeyError:
+                error_counter += 1
 
-        print('------------------------------------------------------------------')
-        print(data_object_ids)
+        ad_urls = ['https://www.immobilienscout24.de/expose/%s/' for data_object_id in data_object_ids]
+
+        for ad_url in ad_urls:
+            yield scrapy.Request(url=ad_url, callback=self.parse_ad)
+    
+
+        
         
         
         
