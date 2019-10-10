@@ -128,5 +128,6 @@ dmypy.json
 .vscode/
 
 # Byte-compiled / optimized / DLL files
-__pycache__/
 *.py[cod]
+PropertyWebCrawler/PropertyWebCrawler/__pycache__/
+PropertyWebCrawler/PropertyWebCrawler/spiders/__pycache__/
