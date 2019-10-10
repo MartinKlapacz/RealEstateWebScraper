@@ -44,4 +44,3 @@ class RealEstateItem(scrapy.Item):
         living_space            = None
         describtion             = None
 '''
-    
