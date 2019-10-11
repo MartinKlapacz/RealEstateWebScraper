@@ -33,7 +33,7 @@ class PropertySpider(scrapy.Spider):
                 data_object_id = resp.attrib['data-obid']
                 PropertySpider.data_object_ids.append(data_object_id)
             except KeyError:
-                pass
+                PropertySpider.error_counter += 1
                 # TODO: handle errors
         
         for data_object_id in PropertySpider.data_object_ids:
@@ -49,3 +49,4 @@ class PropertySpider(scrapy.Spider):
 
     def closed(self, reason):
         print('Collected %s ids' % len(PropertySpider.data_object_ids))
+        print('%s errors' % PropertySpider.error_counter)
