@@ -1,9 +1,8 @@
-
 # -*- coding: utf-8 -*-
 import scrapy
 from ..items import RealEstateItem
 
-class PropertySpider(scrapy.Spider):
+class RealEstateSpider(scrapy.Spider):
     name = 'mainpage'
     error_counter = 0
     real_estate_link = 'https://www.immobilienscout24.de/expose/'
@@ -31,12 +30,12 @@ class PropertySpider(scrapy.Spider):
                 query = '//*[@id="resultListItems"]/li[%s]/div/article' % i
                 resp = response.xpath(query)
                 data_object_id = resp.attrib['data-obid']
-                PropertySpider.data_object_ids.append(data_object_id)
+                RealEstateSpider.data_object_ids.append(data_object_id)
             except KeyError:
-                PropertySpider.error_counter += 1
+                RealEstateSpider.error_counter += 1
                 # TODO: handle errors
         
-        for data_object_id in PropertySpider.data_object_ids:
+        for data_object_id in RealEstateSpider.data_object_ids:
             yield response.follow('expose/%s' % data_object_id, callback = self.parse_real_estate_page)
 
         next_page_href = response.xpath('//*[@id="pager"]/div[3]/a').attrib['href']
@@ -48,5 +47,5 @@ class PropertySpider(scrapy.Spider):
         # TODO: scrap next page, if it exists
 
     def closed(self, reason):
-        print('Collected %s ids' % len(PropertySpider.data_object_ids))
-        print('%s errors' % PropertySpider.error_counter)
+        print('Collected %s ids' % len(RealEstateSpider.data_object_ids))
+        print('%s errors' % RealEstateSpider.error_counter)
