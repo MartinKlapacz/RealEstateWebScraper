@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Scrapy settings for PropertyWebCrawler project
+# Scrapy settings for realEstateWebScraper project
 #
 # For simplicity, this file contains only settings considered important or
 # commonly used. You can find more settings consulting the documentation:
@@ -9,14 +9,14 @@
 #     https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 
-BOT_NAME = 'PropertyWebCrawler'
+BOT_NAME = 'realEstateWebScraper'
 
-SPIDER_MODULES = ['PropertyWebCrawler.spiders']
-NEWSPIDER_MODULE = 'PropertyWebCrawler.spiders'
+SPIDER_MODULES = ['realEstateWebScraper.spiders']
+NEWSPIDER_MODULE = 'realEstateWebScraper.spiders'
 
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-#USER_AGENT = 'PropertyWebCrawler (+http://www.yourdomain.com)'
+#USER_AGENT = 'realEstateWebScraper (+http://www.yourdomain.com)'
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = True
@@ -47,13 +47,13 @@ ROBOTSTXT_OBEY = True
 # Enable or disable spider middlewares
 # See https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 #SPIDER_MIDDLEWARES = {
-#    'PropertyWebCrawler.middlewares.PropertywebcrawlerSpiderMiddleware': 543,
+#    'realEstateWebScraper.middlewares.realEstateWebScraperSpiderMiddleware': 543,
 #}
 
 # Enable or disable downloader middlewares
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #DOWNLOADER_MIDDLEWARES = {
-#    'PropertyWebCrawler.middlewares.PropertywebcrawlerDownloaderMiddleware': 543,
+#    'realEstateWebScraper.middlewares.realEstateWebScraperDownloaderMiddleware': 543,
 #}
 
 # Enable or disable extensions
@@ -65,7 +65,7 @@ ROBOTSTXT_OBEY = True
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 #ITEM_PIPELINES = {
-#    'PropertyWebCrawler.pipelines.PropertywebcrawlerPipeline': 300,
+#    'realEstateWebScraper.pipelines.realEstateWebScraperPipeline': 300,
 #}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
