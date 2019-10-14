@@ -24,23 +24,3 @@ class RealEstateItem(scrapy.Item):
     energy_certificate = scrapy.Field()
     living_space = scrapy.Field()
     describtion = scrapy.Field()
-    
-'''    
-    def __init__(self):
-        total_price             = None
-        total_price             = None
-        room_number             = None
-        balcony                 = None
-        bedroom_number          = None
-        bathroom_number         = None
-        property_type           = None
-        garage                  = None
-        internetspeed_maximum   = None
-        construction_year       = None
-        object_condition        = None
-        heater                  = None
-        power_consumption       = None
-        energy_certificate      = None
-        living_space            = None
-        describtion             = None
-'''

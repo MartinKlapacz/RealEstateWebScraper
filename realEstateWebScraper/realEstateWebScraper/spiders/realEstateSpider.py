@@ -17,8 +17,32 @@ class RealEstateSpider(scrapy.Spider):
             yield scrapy.Request(url=url, callback=self.parse)
 
     def parse_real_estate_page(self, response):
-        item = ItemLoader(item=RealEstateItem(), response=response)
+        loader = ItemLoader(item=RealEstateItem(), response=response)
+
+        loader.add_xpath('total_price', '//*[@id="is24-content"]/div[2]/div[1]/div[2]/div[1]/div[1]/div[1]')
+        loader.add_xpath('room_number', '//*[@id="is24-content"]/div[2]/div[1]/div[4]/div[1]/dl[4]/dd')
+        loader.add_xpath('bedroom_number', '//*[@id="is24-content"]/div[2]/div[1]/div[4]/div[1]/dl[5]/dd')
+
+        loader.add_xpath('bathroom_number', '//*[@id="is24-content"]/div[2]/div[1]/div[4]/div[1]/dl[6]/dd')
+        
+        loader.add_xpath('', '')
+        loader.add_xpath('', '')
+        loader.add_xpath('', '')
+        loader.add_xpath('', '')
+        loader.add_xpath('', '')
+        loader.add_xpath('', '')
+        loader.add_xpath('', '')
+        loader.add_xpath('', '')
+        loader.add_xpath('', '')
+        loader.add_xpath('', '')
+        loader.add_xpath('', '')
+        loader.add_xpath('', '')
+        loader.add_xpath('', '')
+        loader.add_xpath('', '')
+        loader.add_xpath('', '')
+
         item = response.xpath('//*[@id="is24-content"]/div[2]/div[1]/div[4]/div[1]/dl[1]/dd/text()').get() 
+        
         yield None
 
     def parse(self, response):
@@ -34,7 +58,6 @@ class RealEstateSpider(scrapy.Spider):
                 data_object_id = resp.attrib['data-obid']
                 RealEstateSpider.data_object_ids.append(data_object_id)
                 i += 1
-
 
         for data_object_id in RealEstateSpider.data_object_ids:
             yield response.follow('expose/%s' % data_object_id, callback = self.parse_real_estate_page)
