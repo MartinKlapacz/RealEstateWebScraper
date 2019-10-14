@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import scrapy
 from ..items import RealEstateItem
+from scrapy.loader import ItemLoader
 
 class RealEstateSpider(scrapy.Spider):
     name = 'mainpage'
@@ -16,25 +17,25 @@ class RealEstateSpider(scrapy.Spider):
             yield scrapy.Request(url=url, callback=self.parse)
 
     def parse_real_estate_page(self, response):
-        # TODO: init exposeItem
-        re_item = RealEstateItem()
-        re_type = response.xpath('//*[@id="is24-content"]/div[2]/div[1]/div[4]/div[1]/dl[1]/dd/text()').get()
-        # ...
+        item = ItemLoader(item=RealEstateItem(), response=response)
+        item = response.xpath('//*[@id="is24-content"]/div[2]/div[1]/div[4]/div[1]/dl[1]/dd/text()').get() 
         yield None
-
 
     def parse(self, response):
         # TODO: get number of li-nodes inside the lu-node, instead of hardcoding 20
-        for i in range(20):
-            try:
+        i = 1
+        while i <= 20:
+            if response.xpath('//*[@id="resultListItems"]/li[%s]' % i).attrib['class'].strip() == 'align-center background':
+                RealEstateSpider.error_counter += 1
+                i += 1
+            else:
                 query = '//*[@id="resultListItems"]/li[%s]/div/article' % i
                 resp = response.xpath(query)
                 data_object_id = resp.attrib['data-obid']
                 RealEstateSpider.data_object_ids.append(data_object_id)
-            except KeyError:
-                RealEstateSpider.error_counter += 1
-                # TODO: handle errors
-        
+                i += 1
+
+
         for data_object_id in RealEstateSpider.data_object_ids:
             yield response.follow('expose/%s' % data_object_id, callback = self.parse_real_estate_page)
 
@@ -44,8 +45,27 @@ class RealEstateSpider(scrapy.Spider):
         else:
             yield None
 
-        # TODO: scrap next page, if it exists
 
     def closed(self, reason):
         print('Collected %s ids' % len(RealEstateSpider.data_object_ids))
-        print('%s errors' % RealEstateSpider.error_counter)
+        print(RealEstateSpider.error_counter)
+        
+
+        '''
+total_price             
+total_price             
+room_number             
+balcony                 
+bedroom_number          
+bathroom_number         
+property_type           
+garage                  
+internetspeed_maximum   
+construction_year       
+object_condition        
+heater                  
+power_consumption       
+energy_certificate      
+living_space            
+describtion             
+'''
