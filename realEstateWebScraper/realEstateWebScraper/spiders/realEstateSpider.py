@@ -2,6 +2,7 @@
 import scrapy
 from ..items import RealEstateItem
 from scrapy.loader import ItemLoader
+from ..xpaths import *
 
 class RealEstateSpider(scrapy.Spider):
     name = 'mainpage'
@@ -17,31 +18,27 @@ class RealEstateSpider(scrapy.Spider):
             yield scrapy.Request(url=url, callback=self.parse)
 
     def parse_real_estate_page(self, response):
-        loader = ItemLoader(item=RealEstateItem(), response=response)
 
-        loader.add_xpath('total_price', '//*[@id="is24-content"]/div[2]/div[1]/div[2]/div[1]/div[1]/div[1]')
-        loader.add_xpath('room_number', '//*[@id="is24-content"]/div[2]/div[1]/div[4]/div[1]/dl[4]/dd')
-        loader.add_xpath('bedroom_number', '//*[@id="is24-content"]/div[2]/div[1]/div[4]/div[1]/dl[5]/dd')
+        item_loader = ItemLoader(item=RealEstateItem(), response=response)
+        item_loader.add_xpath('total_price', total_price_xpath)
+        item_loader.add_xpath('room_number', room_number_xpath)
+        item_loader.add_xpath('bedroom_number', bedroom_number_xpath)
+        item_loader.add_xpath('balcony', balcony_xpath)
+        item_loader.add_xpath('bedroom_number', bedroom_number_xpath)
+        item_loader.add_xpath('bathroom_number', bathroom_number_xpath)
+        item_loader.add_xpath('property_type', property_type_xpath)
+        item_loader.add_xpath('garage', garage_xpath)
+        item_loader.add_xpath('internetspeed_maximum', internetspeed_maximum_xpath)
+        item_loader.add_xpath('construction_year', construction_year_xpath)
+        item_loader.add_xpath('object_condition', object_condition_xpath)
+        item_loader.add_xpath('heater', heater_xpath)
+        item_loader.add_xpath('power_consumption', power_consumption_xpath)
+        item_loader.add_xpath('energy_certificate', energy_certificate_xpath)
+        item_loader.add_xpath('living_space', living_space_xpath)
+        item_loader.add_xpath('describtion', describtion_xpath)
 
-        loader.add_xpath('bathroom_number', '//*[@id="is24-content"]/div[2]/div[1]/div[4]/div[1]/dl[6]/dd')
+        item = item_loader.load_item()
         
-        loader.add_xpath('', '')
-        loader.add_xpath('', '')
-        loader.add_xpath('', '')
-        loader.add_xpath('', '')
-        loader.add_xpath('', '')
-        loader.add_xpath('', '')
-        loader.add_xpath('', '')
-        loader.add_xpath('', '')
-        loader.add_xpath('', '')
-        loader.add_xpath('', '')
-        loader.add_xpath('', '')
-        loader.add_xpath('', '')
-        loader.add_xpath('', '')
-        loader.add_xpath('', '')
-        loader.add_xpath('', '')
-
-        item = response.xpath('//*[@id="is24-content"]/div[2]/div[1]/div[4]/div[1]/dl[1]/dd/text()').get() 
         
         yield None
 
@@ -72,23 +69,3 @@ class RealEstateSpider(scrapy.Spider):
     def closed(self, reason):
         print('Collected %s ids' % len(RealEstateSpider.data_object_ids))
         print(RealEstateSpider.error_counter)
-        
-
-        '''
-total_price             
-total_price             
-room_number             
-balcony                 
-bedroom_number          
-bathroom_number         
-property_type           
-garage                  
-internetspeed_maximum   
-construction_year       
-object_condition        
-heater                  
-power_consumption       
-energy_certificate      
-living_space            
-describtion             
-'''
