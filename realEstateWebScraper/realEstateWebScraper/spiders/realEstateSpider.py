@@ -8,7 +8,7 @@ class RealEstateSpider(scrapy.Spider):
     name = 'mainpage'
     error_counter = 0
     real_estate_link = 'https://www.immobilienscout24.de/expose/'
-    data_object_ids = []
+    data_ids = []
 
     def start_requests(self):
         urls = [
@@ -18,8 +18,8 @@ class RealEstateSpider(scrapy.Spider):
             yield scrapy.Request(url=url, callback=self.parse)
 
     def parse_real_estate_page(self, response):
-
         item_loader = ItemLoader(item=RealEstateItem(), response=response)
+
         item_loader.add_xpath('total_price', total_price_xpath)
         item_loader.add_xpath('room_number', room_number_xpath)
         item_loader.add_xpath('bedroom_number', bedroom_number_xpath)
@@ -46,18 +46,17 @@ class RealEstateSpider(scrapy.Spider):
         # TODO: get number of li-nodes inside the lu-node, instead of hardcoding 20
         i = 1
         while i <= 20:
-            if response.xpath('//*[@id="resultListItems"]/li[%s]' % i).attrib['class'].strip() == 'align-center background':
+            li_elem = response.xpath('//*[@id="resultListItems"]/li[%s]' % i)
+            li_elem_class = li_elem.attrib['class']
+            if li_elem_class.strip() == 'align-center background':
                 RealEstateSpider.error_counter += 1
-                i += 1
             else:
-                query = '//*[@id="resultListItems"]/li[%s]/div/article' % i
-                resp = response.xpath(query)
-                data_object_id = resp.attrib['data-obid']
-                RealEstateSpider.data_object_ids.append(data_object_id)
-                i += 1
+                data_id = li_elem.attrib['data-id']
+                RealEstateSpider.data_ids.append(data_id)
+            i += 1
 
-        for data_object_id in RealEstateSpider.data_object_ids:
-            yield response.follow('expose/%s' % data_object_id, callback = self.parse_real_estate_page)
+        for data_id in RealEstateSpider.data_ids:
+            yield response.follow('expose/%s' % data_id, callback = self.parse_real_estate_page)
 
         next_page_href = response.xpath('//*[@id="pager"]/div[3]/a').attrib['href']
         if next_page_href is not None:
@@ -67,5 +66,5 @@ class RealEstateSpider(scrapy.Spider):
 
 
     def closed(self, reason):
-        print('Collected %s ids' % len(RealEstateSpider.data_object_ids))
+        print('Collected %s ids' % len(RealEstateSpider.data_ids))
         print(RealEstateSpider.error_counter)
