@@ -1,4 +1,4 @@
-total_price_xpath = '//*[@id="is24-content"]/div[2]/div[1]/div[4]/div[4]/div[2]/div/div/div/div[1]/div[6]/span/span/text()'
+total_price_xpath = '//*[@id="is24-content"]/div[3]/div[1]/div[2]/div[1]/div[1]/div[1]/text()'
 room_number_xpath = '//*[@id="is24-content"]/div[2]/div[1]/div[4]/div[1]/dl[4]/dd/text()'
 bedroom_number_xpath = '//*[@id="is24-content"]/div[2]/div[1]/div[4]/div[1]/dl[5]/dd/text()'
 balcony_xpath = ''

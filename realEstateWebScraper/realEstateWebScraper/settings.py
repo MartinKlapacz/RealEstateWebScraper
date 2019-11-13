@@ -16,7 +16,7 @@ NEWSPIDER_MODULE = 'realEstateWebScraper.spiders'
 
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-#USER_AGENT = 'realEstateWebScraper (+http://www.yourdomain.com)'
+USER_AGENT = 'realEstateWebScraper'
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = True

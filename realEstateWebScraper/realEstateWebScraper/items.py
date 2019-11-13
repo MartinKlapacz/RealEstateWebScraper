@@ -6,6 +6,8 @@
 # https://docs.scrapy.org/en/latest/topics/items.html
 
 import scrapy
+from scrapy.loader import ItemLoader
+from scrapy.loader.processors import TakeFirst, MapCompose, Join
 
 
 class RealEstateItem(scrapy.Item):
@@ -24,3 +26,6 @@ class RealEstateItem(scrapy.Item):
     energy_certificate = scrapy.Field()
     living_space = scrapy.Field()
     describtion = scrapy.Field()
+
+class RealEstateItemLoader(ItemLoader):
+    default_input_processor = TakeFirst()
