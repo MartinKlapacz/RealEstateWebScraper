@@ -29,15 +29,17 @@ class RealEstateSpider(scrapy.Spider):
         item_loader.add_xpath('construction_year', construction_year_xpath)
         item_loader.add_xpath('power_consumption', power_consumption_xpath)
         item_loader.add_xpath('describtion', describtion_xpath)
+        item_loader.add_xpath('internetspeed_maximum', internetspeed_maximum_xpath)
+        item_loader.add_xpath('garage', garage_xpath)
+        item_loader.add_xpath('energy_certificate', energy_certificate_xpath)
         RealEstateSpider.item_counter += 1
         yield item_loader.load_item()
+        # causing errors:
         # item_loader.add_xpath('object_condition', object_condition_xpath)
         # item_loader.add_xpath('balcony', balcony_xpath)
-        # item_loader.add_xpath('bathroom_number', bathroom_number_xpath)
-        # item_loader.add_xpath('garage', garage_xpath)
-        # item_loader.add_xpath('internetspeed_maximum', internetspeed_maximum_xpath)
         # item_loader.add_xpath('heater', heater_xpath)
-        # item_loader.add_xpath('energy_certificate', energy_certificate_xpath)
+        # incorrect xpaths:
+        # item_loader.add_xpath('bathroom_number', bathroom_number_xpath)
 
     def parse(self, response):
         # TODO: get number of li-nodes inside the lu-node, instead of hardcoding 20
